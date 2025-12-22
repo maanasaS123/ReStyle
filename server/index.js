@@ -13,6 +13,14 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.error(err));
 
+
+app.get("/", (req, res) => {
+res.json({ message: "API running" });
+});
+
+const PORT = process.env.PORT || 5000;
+
+
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });
