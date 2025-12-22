@@ -3,6 +3,8 @@ dotenv.config();
 
 import express from "express";
 import mongoose from "mongoose";
+import itemsRoutes from "./routes/items.js";
+
 
 console.log("MONGO_URI:", process.env.MONGO_URI);
 
@@ -16,7 +18,11 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.get("/", (req, res) => {
 res.json({ message: "API running" });
+
+
 });
+
+app.use("/api/items", itemsRoutes);
 
 const PORT = process.env.PORT || 5000;
 
