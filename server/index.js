@@ -4,11 +4,15 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import itemsRoutes from "./routes/items.js";
+import cors from "cors";
+
 
 
 console.log("MONGO_URI:", process.env.MONGO_URI);
 
 const app = express();
+
+app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
