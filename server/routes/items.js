@@ -16,15 +16,19 @@ router.get("/", async (req, res) => {
 // POST create a clothing item
 router.post("/", async (req, res) => {
   try {
-    console.log("POST body:", req.body);
-    const item = new ClothingItem(req.body);
-    await item.save();
+    const { imageUrl } = req.body;
+
+    if (!imageUrl) {
+      return res.status(400).json({ error: "imageUrl is required" });
+    }
+
+    const item = await ClothingItem.create({ imageUrl }); // extracted fields stay empty
     res.status(201).json(item);
   } catch (err) {
-    console.error("POST error:", err.message);
     res.status(400).json({ error: err.message });
   }
 });
+
 
 
 

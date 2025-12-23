@@ -4,6 +4,8 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import itemsRoutes from "./routes/items.js";
+import uploadRoutes from "./routes/uploads.js";
+
 import cors from "cors";
 
 
@@ -25,12 +27,15 @@ res.json({ message: "API running" });
 
 
 });
+app.use("/uploads", express.static("uploads"));
+app.use("/api/uploads", uploadRoutes);
+
 
 app.use("/api/items", itemsRoutes);
 
 const PORT = process.env.PORT || 5000;
 
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });

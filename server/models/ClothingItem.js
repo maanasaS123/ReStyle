@@ -1,13 +1,23 @@
 import mongoose from "mongoose";
 
-const clothingItemSchema = new mongoose.Schema({
-  imageUrl: { type: String, required: true },
-  name: { type: String, required: true },
-  category: { type: String, required: true },
-  color: { type: String, required: true },
-  style: { type: String, required: true }
-},
-{ timestamps: true },
+const clothingItemSchema = new mongoose.Schema(
+  {
+    imageUrl: { type: String, required: true },
+
+    // extracted later from image
+    name: { type: String, default: "" },
+    category: { type: String, default: "" }, // "top" | "bottom" | "shoes" later
+    color: { type: String, default: "" },
+    style: { type: String, default: "" },    // "casual" | "formal" | "sporty" later
+
+    analysisStatus: {
+      type: String,
+      enum: ["pending", "done", "failed"],
+      default: "pending",
+    },
+    analysisError: { type: String, default: "" },
+  },
+  { timestamps: true }
 );
 
 export default mongoose.model("ClothingItem", clothingItemSchema);
