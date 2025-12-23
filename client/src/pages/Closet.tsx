@@ -129,7 +129,7 @@ export default function Closet() {
                 <img
                   src={item.imageUrl}
                   alt="Clothing item"
-                  className="w-32 h-32 object-cover rounded-md border"
+                  className="!w-32 !h-32 object-cover rounded-md border"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).style.display = "none";
                   }}
