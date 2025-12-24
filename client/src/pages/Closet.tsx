@@ -61,7 +61,9 @@ export default function Closet() {
       }
 
       // 2) Create item in Mongo using the returned imageUrl
-      await axios.post("http://localhost:5000/api/items", { imageUrl });
+      //await axios.post("http://localhost:5000/api/items", { imageUrl });
+      
+ 
 
       // 3) Reset + refresh
       setSelectedFile(null);
