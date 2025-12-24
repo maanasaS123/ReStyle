@@ -1,14 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Closet from "./pages/Closet"
-import Generate from "./pages/Generate"
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Closet from "./pages/Closet";
+import Generate from "./pages/Generate";
 
-export default function App() {
+const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Closet />} />
-        <Route path="/generate" element={<Generate />} />
-      </Routes>
-    </BrowserRouter>
-  )
-}
+    <Router>
+      <Navbar />
+      <div className="p-4">
+        <Routes>
+          <Route path="/" element={<Navigate to="/closet" />} />
+          <Route path="/closet" element={<Closet />} />
+          <Route path="/generate" element={<Generate />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+};
+
+export default App;

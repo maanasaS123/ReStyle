@@ -1,0 +1,26 @@
+.navbar {
+  background-color: #1f2937; /* dark gray */
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 50px; /* space between buttons */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+  background-color: #374151; /* slightly lighter gray */
+}
+
+.nav-link.active {
+  background-color: #4b5563; /* highlight active page */
+}
