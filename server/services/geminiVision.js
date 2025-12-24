@@ -1,45 +1,52 @@
 import fs from "fs";
+import path from "path";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize Gemini client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+function parseJsonFromGemini(text) {
+  let cleaned = text.trim();
+  cleaned = cleaned.replace(/^```json\s*/i, "").replace(/^```\s*/i, "");
+  cleaned = cleaned.replace(/\s*```$/i, "").trim();
+  return JSON.parse(cleaned);
+}
 
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash"
-});
-
-// Convert image file to Gemini inline data
 function imageToGenerativePart(imagePath) {
-  const imageBuffer = fs.readFileSync(imagePath);
+  const abs = path.resolve(imagePath);
+  const imageBuffer = fs.readFileSync(abs);
+
+  const ext = path.extname(abs).toLowerCase();
+  const mimeType = ext === ".png" ? "image/png" : "image/jpeg";
 
   return {
     inlineData: {
       data: imageBuffer.toString("base64"),
-      mimeType: "image/jpeg" // change if your image is png
+      mimeType
     }
   };
 }
 
-// Prompt for Gemini to extract clothing attributes
 const PROMPT = `
-You are a fashion analysis system.
+Return ONLY a JSON object with EXACT keys: name, category, color, style.
 
-Analyze the clothing item in the image and return ONLY valid JSON with:
-- name: short descriptive name
-- category: one of [top, bottom, shoes, outerwear]
-- color: primary visible color
-- style: one of [casual, formal, sporty]
+category MUST be EXACTLY one of: "top", "bottom", "shoes", "outerwear"
+style MUST be EXACTLY one of: "casual", "formal", "sporty"
 
-Rules:
-- Output JSON only
-- No explanations
-- No markdown
-- Make the best reasonable guess if uncertain
+No markdown. No code fences. No extra text.
 `;
 
-// Main function to call Gemini
 export async function extractClothingAttributes(imagePath) {
-  console.log("Analyzing image:", imagePath); // optional debug
+  console.log("Analyzing image:", imagePath);
+  console.log("Gemini key exists?", !!process.env.GEMINI_API_KEY);
+
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error("GEMINI_API_KEY missing at runtime");
+  }
+
+  // 🔑 CREATE GEMINI HERE (not at top of file)
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    generationConfig: { responseMimeType: "application/json" }
+  });
 
   const imagePart = imageToGenerativePart(imagePath);
 
@@ -49,10 +56,7 @@ export async function extractClothingAttributes(imagePath) {
   ]);
 
   const responseText = result.response.text();
+  console.log("Gemini raw response:", responseText);
 
-  try {
-    return JSON.parse(responseText);
-  } catch (err) {
-    throw new Error("Failed to parse Gemini output as JSON: " + responseText);
-  }
+  return parseJsonFromGemini(responseText);
 }
