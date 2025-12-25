@@ -10,6 +10,8 @@ type OutfitResult = {
   shoes_image?: string;
 };
 
+type OutfitPart = "top" | "bottom" | "shoes";
+
 export default function Generate() {
   const [style, setStyle] = useState("");
   const [result, setResult] = useState<OutfitResult | null>(null);
@@ -31,7 +33,7 @@ export default function Generate() {
         return;
       }
 
-      // 2) Call the CORRECT outfits endpoint
+      // 2) Call the outfits endpoint
       const outfitRes = await axios.post(
         "http://localhost:5000/api/outfits",
         {
@@ -76,20 +78,25 @@ export default function Generate() {
           <h2 className="text-xl font-semibold mb-4">Suggested Outfit</h2>
 
           <div className="flex flex-col space-y-4">
-            {["top", "bottom", "shoes"].map((part) => (
-              <div key={part} className="flex items-center space-x-4">
-                <p className="font-bold capitalize w-20">{part}:</p>
-                <p>{(result as any)[part]}</p>
+            {(["top", "bottom", "shoes"] as OutfitPart[]).map((part) => {
+              const imageKey = `${part}_image` as keyof OutfitResult;
 
-                {(result as any)[`${part}_image`] && (
-                  <img
-                    src={(result as any)[`${part}_image`]}
-                    alt={(result as any)[part]}
-                    className="w-24 h-24 object-cover border rounded"
-                  />
-                )}
-              </div>
-            ))}
+              return (
+                <div key={part} className="flex items-center space-x-4">
+                  <p className="font-bold capitalize w-20">{part}:</p>
+
+                  <p>{result[part]}</p>
+
+                  {result[imageKey] && (
+                    <img
+                      src={result[imageKey]}
+                      alt={result[part]}
+                      className="w-24 h-24 object-cover border rounded"
+                    />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
