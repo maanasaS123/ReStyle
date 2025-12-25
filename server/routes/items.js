@@ -1,3 +1,5 @@
+//this file handles CRUD operations for clothing items in the database
+
 import express from "express";
 import ClothingItem from "../models/ClothingItem.js";
 

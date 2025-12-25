@@ -1,3 +1,5 @@
+//this file returns clothing attributes extracted from an image using Gemini Vision
+
 import fs from "fs";
 import path from "path";
 import { GoogleGenerativeAI } from "@google/generative-ai";

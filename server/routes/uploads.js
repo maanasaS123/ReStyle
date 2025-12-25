@@ -1,3 +1,5 @@
+//this file handles image uploads and uses Gemini API to extract clothing attributes
+
 import express from "express";
 import multer from "multer";
 import path from "path";

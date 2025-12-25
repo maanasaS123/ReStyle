@@ -1,3 +1,5 @@
+//this file defines the ClothingItem model for MongoDB using Mongoose
+
 import mongoose from "mongoose";
 
 const clothingItemSchema = new mongoose.Schema(

@@ -1,27 +1,49 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+type OutfitResult = {
+  top?: string;
+  top_image?: string;
+  bottom?: string;
+  bottom_image?: string;
+  shoes?: string;
+  shoes_image?: string;
+};
+
 export default function Generate() {
   const [style, setStyle] = useState("");
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<OutfitResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleGenerate = async () => {
     setLoading(true);
+    setError("");
+    setResult(null);
+
     try {
       // 1) Fetch wardrobe from backend
       const wardrobeRes = await axios.get("http://localhost:5000/api/items");
       const wardrobe = wardrobeRes.data;
 
-      // 2) Send to generate endpoint
+      if (!wardrobe || wardrobe.length === 0) {
+        setError("Your wardrobe is empty. Please add items first.");
+        return;
+      }
+
+      // 2) Call the CORRECT outfits endpoint
       const outfitRes = await axios.post(
-        "http://localhost:5000/api/generate-outfit",
-        { wardrobe, stylePreference: style }
+        "http://localhost:5000/api/outfits",
+        {
+          wardrobe,
+          stylePreference: style || "casual",
+        }
       );
 
       setResult(outfitRes.data);
     } catch (err) {
       console.error(err);
+      setError("Failed to generate outfit. Check backend or Gemini API.");
     } finally {
       setLoading(false);
     }
@@ -33,32 +55,36 @@ export default function Generate() {
 
       <input
         type="text"
-        placeholder="Enter style (e.g., casual, formal)"
+        placeholder="Enter style (e.g., casual, formal, streetwear)"
         value={style}
         onChange={(e) => setStyle(e.target.value)}
-        className="border p-2 w-full"
+        className="border p-2 w-full rounded"
       />
 
       <button
         onClick={handleGenerate}
-        className="px-4 py-2 bg-black text-white rounded"
+        className="px-4 py-2 bg-black text-white rounded disabled:opacity-50"
         disabled={loading}
       >
         {loading ? "Generating..." : "Generate Outfit"}
       </button>
 
+      {error && <p className="text-red-600">{error}</p>}
+
       {result && (
         <div className="mt-6">
-          <h2 className="text-xl font-semibold">Suggested Outfit</h2>
-          <div className="flex flex-col space-y-4 mt-2">
+          <h2 className="text-xl font-semibold mb-4">Suggested Outfit</h2>
+
+          <div className="flex flex-col space-y-4">
             {["top", "bottom", "shoes"].map((part) => (
               <div key={part} className="flex items-center space-x-4">
-                <p className="font-bold capitalize">{part}:</p>
-                <p>{result[part]}</p>
-                {result[`${part}_image`] && (
+                <p className="font-bold capitalize w-20">{part}:</p>
+                <p>{(result as any)[part]}</p>
+
+                {(result as any)[`${part}_image`] && (
                   <img
-                    src={result[`${part}_image`]}
-                    alt={result[part]}
+                    src={(result as any)[`${part}_image`]}
+                    alt={(result as any)[part]}
                     className="w-24 h-24 object-cover border rounded"
                   />
                 )}

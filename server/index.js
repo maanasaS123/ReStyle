@@ -2,46 +2,32 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
+import outfitsRouter from "./routes/outfits.js";
+
 import mongoose from "mongoose";
+import cors from "cors";
+
 import itemsRoutes from "./routes/items.js";
 import uploadRoutes from "./routes/uploads.js";
 
-import cors from "cors";
-
-console.log("GEMINI_API_KEY exists?", !!process.env.GEMINI_API_KEY);
-console.log("GEMINI_API_KEY first 6 chars:", process.env.GEMINI_API_KEY?.slice(0, 6));
-
-
-
-console.log("MONGO_URI:", process.env.MONGO_URI);
-
 const app = express();
+
 
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
-
+console.log("GEMINI_API_KEY exists?", !!process.env.GEMINI_API_KEY);
+console.log("GEMINI_API_KEY first 6 chars:", process.env.GEMINI_API_KEY?.slice(0, 6));
+console.log("MONGO_URI:", process.env.MONGO_URI);
 
 app.get("/", (req, res) => {
-res.json({ message: "API running" });
-
-
+  res.json({ message: "API running" });
 });
-app.use("/uploads", express.static("uploads"));
-app.use("/api/uploads", uploadRoutes);
-
 
 app.use("/api/items", itemsRoutes);
-
-const PORT = process.env.PORT || 5000;
-
-
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.use("/api/uploads", uploadRoutes);
+app.use("/api/outfits", outfitsRouter);
 
 //test
 app.get("/api/test-gemini-key", async (req, res) => {
@@ -57,3 +43,12 @@ app.get("/api/test-gemini-key", async (req, res) => {
   }
 });
 
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error(err));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
