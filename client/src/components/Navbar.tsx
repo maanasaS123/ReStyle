@@ -10,14 +10,12 @@ const Navbar: React.FC = () => {
       <Link
         to="/closet"
         className={`nav-link ${location.pathname === "/closet" ? "active" : ""}`}
-      >
-        Closet
+        ><b>Closet</b>
       </Link>
       <Link
         to="/generate"
         className={`nav-link ${location.pathname === "/generate" ? "active" : ""}`}
-      >
-        Generate Outfit
+        ><b>Generate Outfit</b>
       </Link>
     </nav>
   );

@@ -1,26 +1,24 @@
 .navbar {
-  background-color: #1f2937; /* dark gray */
-  padding: 20px 0;
+  background-color: #F9F8F6; /* Your lightest color */
+  border-bottom: 1px solid #D9CFC7;
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: center;
-  gap: 50px; /* space between buttons */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  justify-content: center; /* Center the branding/nav */
+  gap: 3rem;
 }
 
 .nav-link {
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  padding: 12px 24px;
-  border-radius: 10px;
+  color: #777; /* Subtle text for inactive */
+  font-weight: 500;
   text-decoration: none;
-  transition: background-color 0.2s;
+  font-family: 'Inter', sans-serif; /* Clean font */
 }
 
 .nav-link:hover {
-  background-color: #374151; /* slightly lighter gray */
+  color: #452829; /* slightly lighter gray */
 }
 
 .nav-link.active {
-  background-color: #4b5563; /* highlight active page */
+  color: #C9B59C; /* Your Accent Color */
+  border-bottom: 2px solid #C9B59C;
 }
