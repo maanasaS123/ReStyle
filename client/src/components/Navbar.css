@@ -1,24 +1,31 @@
 .navbar {
-  background-color: #F9F8F6; /* Your lightest color */
+  background-color: #F9F8F6;
   border-bottom: 1px solid #D9CFC7;
-  padding: 1rem 2rem;
+  width: 100%;
+}
+
+.navbar-inner {
+  max-width: 1100px; /* laptop-friendly width */
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
   display: flex;
-  justify-content: center; /* Center the branding/nav */
+  justify-content: center;
   gap: 3rem;
 }
 
 .nav-link {
-  color: #777; /* Subtle text for inactive */
+  color: #540863;
   font-weight: 500;
   text-decoration: none;
-  font-family: 'Inter', sans-serif; /* Clean font */
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
 }
 
 .nav-link:hover {
-  color: #452829; /* slightly lighter gray */
+  color: #452829;
 }
 
 .nav-link.active {
-  color: #C9B59C; /* Your Accent Color */
-  border-bottom: 2px solid #C9B59C;
+  color: #540863;
+  border-bottom: 2px solid #540863;
+  padding-bottom: 0.25rem;
 }

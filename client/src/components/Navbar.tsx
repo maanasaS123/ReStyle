@@ -1,22 +1,27 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./Navbar.css"; // optional, for styling in CSS file
+import "./Navbar.css";
 
 const Navbar: React.FC = () => {
   const location = useLocation();
 
   return (
     <nav className="navbar">
-      <Link
-        to="/closet"
-        className={`nav-link ${location.pathname === "/closet" ? "active" : ""}`}
-        ><b>Closet</b>
-      </Link>
-      <Link
-        to="/generate"
-        className={`nav-link ${location.pathname === "/generate" ? "active" : ""}`}
-        ><b>Generate Outfit</b>
-      </Link>
+      <div className="navbar-inner">
+        <Link
+          to="/closet"
+          className={`nav-link ${location.pathname === "/closet" ? "active" : ""}`}
+        >
+          <b>Closet</b>
+        </Link>
+
+        <Link
+          to="/generate"
+          className={`nav-link ${location.pathname === "/generate" ? "active" : ""}`}
+        >
+          <b>Generate Outfit</b>
+        </Link>
+      </div>
     </nav>
   );
 };
