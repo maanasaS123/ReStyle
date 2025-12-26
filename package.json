@@ -28,10 +28,12 @@
     "mongoose": "^9.0.2",
     "multer": "^2.0.2",
     "react-hook-form": "^7.69.0",
-    "react-router-dom": "^7.11.0",
-    "tailwindcss": "^4.1.18"
+    "react-router-dom": "^7.11.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "autoprefixer": "^10.4.23",
+    "nodemon": "^3.1.11",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.18"
   }
 }

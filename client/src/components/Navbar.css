@@ -5,12 +5,24 @@
 }
 
 .navbar-inner {
-  max-width: 1100px; /* laptop-friendly width */
+  max-width: 1100px;
   margin: 0 auto;
   padding: 1rem 1.25rem;
   display: flex;
+  align-items: center;
   justify-content: center;
   gap: 3rem;
+}
+
+.navbar-logo {
+  position: absolute;
+  left: 1.25rem;  
+  font-size: 1.75rem;
+  font-weight: bold;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #540863;
+  text-decoration: none;
 }
 
 .nav-link {
@@ -21,7 +33,7 @@
 }
 
 .nav-link:hover {
-  color: #452829;
+  color: #92487A;
 }
 
 .nav-link.active {

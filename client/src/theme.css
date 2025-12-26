@@ -1,0 +1,30 @@
+/* ===== Color Palette ===== */
+
+.text-primary {
+  color: #4A403A;
+}
+
+.text-secondary {
+  color: #5D2F77;
+}
+
+.text-accent {
+  color: #3E1E68;
+}
+
+.text-muted {
+  color: #E45A92;
+}
+
+.text-additional {
+    color: #FFACAC;
+}
+
+/* Backgrounds */
+.bg-main {
+  background-color: #F9F8F6;
+}
+
+.bg-card {
+  background-color: #FFFFFF;
+}

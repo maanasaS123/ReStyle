@@ -8,6 +8,10 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
+        <Link to="/closet" className="navbar-logo">
+          ReStyle
+        </Link>
+
         <Link
           to="/closet"
           className={`nav-link ${location.pathname === "/closet" ? "active" : ""}`}

@@ -6,81 +6,63 @@ import type { Item } from "../components/ClothingCard";
 type MiniCardProps = { item: Item };
 
 const MiniCard = ({ item }: MiniCardProps) => (
-  <div className="flex flex-col border border-[#EFE9E3] rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow transition-shadow">
+  <div className="flex flex-col justify-between border border-[#EFE9E3] rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow transition-shadow h-full">
     <div className="p-3 space-y-2">
       <div className="flex justify-between items-start gap-2">
-        <h3 className="font-medium text-[#4A403A] capitalize truncate">
+        <h3 className="font-medium text-muted capitalize truncate text-sm sm:text-base">
           {item.name || item.category || "Untitled Item"}
         </h3>
       </div>
 
-      {/* Pills */}
       <div className="flex flex-wrap gap-2">
         {item.style && (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#F9F8F6] text-[#8C847C] border border-[#EFE9E3]">
+          <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-medium bg-[#F9F8F6] text-[#8C847C] border border-[#EFE9E3]">
             {"Style: " + item.style}
           </span>
         )}
       </div>
 
-
       <div className="flex flex-wrap gap-2">
         {item.color && (
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[#F9F8F6] text-[#8C847C] border border-[#EFE9E3]">
-            {"Color: " + item.color}
+          <span className="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-medium bg-[#F9F8F6] text-[#8C847C] border border-[#EFE9E3]">
+            {"Colour: " + item.color}
           </span>
         )}
       </div>
 
-      {item.analysisStatus && (
-        <p className="text-xs text-gray-400">
-          Analysis: {item.analysisStatus}
-        </p>
-      )}
     </div>
     
-    
-    
-    
-    
-    
-    {/* Image area */}
-
-
-    <div
-      style={{
-        width: "100%",
-        height: 160,
-        background: "#F9F8F6",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 8,
-        overflow: "hidden",
-        borderBottom: "1px solid #EFE9E3",
-      }}
-    >
-      <img
-        src={item.imageUrl}
-        alt={item.name || item.category || "clothing item"}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-          display: "block",
-        }}
-        onError={(e) => {
-          (e.currentTarget as HTMLImageElement).style.display = "none";
-        }}
-      />
+    {/* IMAGE SECTION */}
+    {/* We add padding (px-2 pb-2) here so the image container floats inside with rounded corners */}
+    <div className="px-2 pb-2 mt-auto">
+        <div
+          style={{
+            width: "100%",
+            height: 160,
+            background: "#F9F8F6",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 8,
+            overflow: "hidden",
+            borderRadius: 16, // THIS rounds the gray box itself
+          }}
+        >
+          <img
+            src={item.imageUrl}
+            alt={item.name || item.category || "clothing item"}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              display: "block",
+            }}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = "none";
+            }}
+          />
+        </div>
     </div>
-
-
-
-
-
-    {/* Text */}
-
   </div>
 );
 
@@ -138,10 +120,10 @@ export default function Closet() {
         {/* Header */}
         <div className="flex items-end justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="text-2xl sm:text-3xl text-[#4A403A] uppercase tracking-widest">
+            <h2 className="text-secondary text-2xl sm:text-3xl uppercase tracking-widest">
               My Closet
-            </h1>
-            <p className="text-sm text-[#8C847C] mt-1">
+            </h2>
+            <p className="text-sm text-secondary mt-1">
               Upload pieces and build outfits. ({items.length} items)
             </p>
           </div>
@@ -149,8 +131,8 @@ export default function Closet() {
 
         {/* Upload bar */}
         <form onSubmit={onSubmit} className="flex flex-col sm:flex-row gap-3">
-          <label className="flex-1 border border-dashed border-[#C9B59C] px-4 py-3 text-center text-sm text-[#8C847C] cursor-pointer rounded-2xl bg-white">
-            {selectedFile ? selectedFile.name : "+ Upload New"}
+          <label className="flex-1 border border-dashed border-[#C9B59C] px-4 py-3 text-center text-sm text-secondary cursor-pointer rounded-2xl bg-white">
+            {selectedFile ? selectedFile.name : "Upload New "}
             <input
               id="imageInput"
               type="file"
@@ -177,7 +159,7 @@ export default function Closet() {
         {/* Items */}
         {items.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-3xl border border-[#D9CFC7] border-dashed">
-            <p className="text-[#8C847C]">Your closet is empty. Upload your first item!</p>
+            <p className="text-secondary">Your closet is empty. Upload your first item!</p>
           </div>
         ) : (
           <div
