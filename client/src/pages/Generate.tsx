@@ -33,14 +33,14 @@ const ResultCard = ({ label, img, text }: ResultCardProps) => (
     "
   >
     <div className="bg-[#C9B59C] text-white text-[10px] text-center font-bold uppercase py-1 z-20">
-      {label}
+      <b>{label}</b>
     </div>
 
     {/* Fixed image frame */}
     <div className="relative"
       style={{
         width: "100%",
-        height: 150, 
+        height: 325, 
         background: "transparent",
         display: "flex",
         alignItems: "center",
